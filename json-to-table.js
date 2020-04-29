@@ -9,10 +9,17 @@ const buttonClickEvent  = () => {
     console.log(user_input);
     let url_string = 'https://api.github.com/users/' + user_input + '/repos';
 
+    //Clear the table
+    let table = document.getElementById("repo-table")
+    if(table){
+        table.innerHTML = '<th>Name</th><th>ID</th><th>Issues Open?</th>'
+    }
     //Grab the data from github
     fetch(url_string)
     .then(response => response.json())
     .then(data => cleanData(data));
+
+    
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -42,5 +49,6 @@ function loadIssueData({name, id, open_issues}){
     cellOne.innerHTML = name
     cellTwo.innerHTML = id
     cellThree.innerHTML = open_issues ? "Yes" : "No"
+    document.getElementById("github-get-button").addEventListener("click", buttonClickEvent);
 }
 
